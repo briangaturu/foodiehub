@@ -63,10 +63,14 @@ export const Navbar = () => {
             </a>
           </li>
           <li>
-            <a href="/foods" className="hover:text-red-600" onClick={closeMenu}>
+              <Link to="/foods" className="hover:text-red-600" onClick={closeMenu}>
+               <BiInfoCircle className="mr-2" />
+              Meals
+              </Link>
+            {/* <a href="/foods" className="hover:text-red-600" onClick={closeMenu}>
               <BiInfoCircle className="mr-2" />
               Meals
-            </a>
+            </a> */}
           </li>
           <li>
             <a href="/newMeals" className="text-red-700 font-semibold" onClick={closeMenu}>
