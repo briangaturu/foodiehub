@@ -1,11 +1,12 @@
 import { MdAdd, MdStar } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../../app/store";
 import { FaSignInAlt } from "react-icons/fa";
 import { mealApi } from "../../features/api/mealsApi";
 import { PuffLoader } from "react-spinners";
 import swal from 'sweetalert2';
 import { ordersApi } from "../../features/api/ordersApi";
+import { addToCart, openCart } from "../../features/cart/cartSlice";
 
 interface mealsData{
   mealId:number,
@@ -88,6 +89,7 @@ const getBadgeColor = (badge: any) => {
   }}
 
 export const FoodCardSection = () => {
+  const dispatch = useDispatch();
 
   const {data:mealsData=[],isLoading,error}= mealApi.useGetAllMealsQuery({})
   //console.log ("foodcard- mealsData:", mealsData)
@@ -103,7 +105,7 @@ export const FoodCardSection = () => {
       icon:"question",
       showCancelButton:true,
       confirmButtonColor:"#2563eb",
-      cancelButtonColor:"f44336",
+      cancelButtonColor:"#f44336",
       confirmButtonText:"yes, order it"
 
     }).then(async(result)=>{
@@ -126,7 +128,7 @@ const userId = user?.userId
 console.log("userId:", userId)
 
  return (
-    <section className="py-20 bg-red-600 px-4 text-white">
+    <section className="py-20 bg-black/50 px-4 text-white">
   <div className="max-w-7xl mx-auto">
     {/* Header */}
     <div className="text-center mb-16">
@@ -193,12 +195,21 @@ console.log("userId:", userId)
               {/* Action Button */}
               {isAuthenticated ? (
                 <button
-                  className="btn w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white border-none shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
-                  onClick={() => handleMakeAnOrder(meal.mealId, meal.mealName, meal.mealPrice)}
-                >
-                  <MdAdd className="text-lg" />
-                  Make an Order
-                </button>
+  className="btn w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white border-none shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200"
+  onClick={() => {
+    dispatch(addToCart({
+      mealId: meal.mealId,
+      mealName: meal.mealName,
+      mealPrice: meal.mealPrice,
+      mealUrl: meal.mealUrl,
+      quantity: 1,
+    }));
+    dispatch(openCart());
+  }}
+>
+  <MdAdd className="text-lg" />
+  Add to Cart
+</button>
               ) : (
                 <a
                   href="/login"

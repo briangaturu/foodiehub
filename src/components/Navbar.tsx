@@ -7,6 +7,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { GrDashboard } from "react-icons/gr";
 import { Link, useNavigate } from "react-router-dom";
 import { clearCredentials } from "../features/auth/authSlice";
+import CartIcon from "./CartIcon";
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -130,6 +131,7 @@ export const Navbar = () => {
       </li>
     </ul>
   </div>
+  <CartIcon />
 
   {/* Navbar End (Auth) */}
   <div className="navbar-end hidden lg:flex gap-3">

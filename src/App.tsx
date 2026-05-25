@@ -19,6 +19,8 @@ import { AllOrders } from "./components/adminDashboard/AllOrders"
 import { AllUsers } from "./components/adminDashboard/AllUsers"
 import { NewServices } from "./pages/Services"
 import { NewCategories } from "./pages/Categories"
+import CartDrawer from "./components/cartDrawer"
+import CartIcon from "./components/CartIcon"
 function App() {
   const router = createBrowserRouter([
     {
@@ -113,7 +115,11 @@ function App() {
   ])
 
   return (
-    <RouterProvider router={router} />
+    <>
+      <CartDrawer />        
+      <CartIcon floating /> 
+      <RouterProvider router={router} />
+    </>
   )
 }
 
