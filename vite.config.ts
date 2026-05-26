@@ -7,8 +7,6 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-
-    // Bundle analyzer (safe on Windows)
     visualizer({
       open: false,
       filename: "dist/stats.html",
@@ -17,20 +15,26 @@ export default defineConfig({
     })
   ],
 
-  build: {
-    // Increase warning limit (does NOT affect performance)
-    chunkSizeWarningLimit: 1000,
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5000', // ✅ your backend port
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 
+  build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks(id) {
-          // Split node_modules into logical chunks
           if (id.includes("node_modules")) {
             if (id.includes("react")) return "react";
             if (id.includes("sweetalert2")) return "sweetalert";
             if (id.includes("react-icons")) return "icons";
-            if (id.includes("@reduxjs") || id.includes("react-redux"))
-              return "redux";
+            if (id.includes("@reduxjs") || id.includes("react-redux")) return "redux";
             return "vendor";
           }
         }

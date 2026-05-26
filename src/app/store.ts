@@ -6,6 +6,7 @@ import cartReducer from "../features/cart/cartSlice";
 import { userApi } from '../features/api/userApi';
 import { mealApi } from '../features/api/mealsApi';
 import { ordersApi } from '../features/api/ordersApi';
+import { paymentsApi } from '../features/api/paymentsApi';
 
 const authPersistConfig = {
   key: 'auth',
@@ -27,13 +28,14 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [mealApi.reducerPath]: mealApi.reducer,
     [ordersApi.reducerPath]: ordersApi.reducer,
+    [paymentsApi.reducerPath]: paymentsApi.reducer,
     auth: persistedAuthReducer,
     cart: persistedCartReducer, // ✅ cart persists across refreshes
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(userApi.middleware, mealApi.middleware, ordersApi.middleware),
+    }).concat(userApi.middleware, mealApi.middleware, ordersApi.middleware, paymentsApi.middleware),
 });
 
 export const persistor = persistStore(store);
