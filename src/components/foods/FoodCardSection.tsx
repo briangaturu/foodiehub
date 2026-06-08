@@ -4,7 +4,6 @@ import type { RootState } from "../../app/store";
 import { FaSignInAlt } from "react-icons/fa";
 import { mealApi } from "../../features/api/mealsApi";
 import { PuffLoader } from "react-spinners";
-import swal from 'sweetalert2';
 import { ordersApi } from "../../features/api/ordersApi";
 import { addToCart, openCart } from "../../features/cart/cartSlice";
 
@@ -94,35 +93,9 @@ export const FoodCardSection = () => {
   const {data:mealsData=[],isLoading,error}= mealApi.useGetAllMealsQuery({})
   //console.log ("foodcard- mealsData:", mealsData)
 
-  const handleMakeAnOrder = async(mealId:number, mealName:string, mealPrice:number)=>{
-    swal.fire({
-      title:"Are you sure",
-      html:`<div>
-      <b>meal:</b> ${mealName}<br/>
-      <b> price:</> Ksh: ${mealPrice}
-      </div>
-      <div style="margin-top:10px;">Do you want to place this order</div>`,
-      icon:"question",
-      showCancelButton:true,
-      confirmButtonColor:"#2563eb",
-      cancelButtonColor:"#f44336",
-      confirmButtonText:"yes, order it"
-
-    }).then(async(result)=>{
-      if(result.isConfirmed){
-        try{
-const res = await createOrder({userId,mealId})
-swal.fire("Ordered",res.data.message,"success")
-        }catch(error){
-          swal.fire("something went wrong", "please try again","error")
-
-        }
-      }
-    })
-  }
 const { isAuthenticated, user } = useSelector((state: RootState) => state.auth)
 
-const [createOrder] = ordersApi.useCreateOrderMutation()
+const [] = ordersApi.useCreateOrderMutation()
 
 const userId = user?.userId
 console.log("userId:", userId)

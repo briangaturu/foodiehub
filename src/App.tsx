@@ -19,7 +19,7 @@ import { AllOrders } from "./components/adminDashboard/AllOrders"
 import { AllUsers } from "./components/adminDashboard/AllUsers"
 import { NewServices } from "./pages/Services"
 import { NewCategories } from "./pages/Categories"
-import CartDrawer from "./components/cartDrawer"
+import CartDrawer from "./components/CartDrawer"
 import CartIcon from "./components/CartIcon"
 function App() {
   const router = createBrowserRouter([
