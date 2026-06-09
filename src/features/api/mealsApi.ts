@@ -3,7 +3,7 @@ import type { RootState } from '../../app/store';
 
 export const mealApi = createApi({
   reducerPath: 'mealApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api/', 
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://foodiehub-backend-1-t03u.onrender.com/api/', 
     prepareHeaders: (headers, {getState})=>{
       const token = (getState() as RootState).auth.token;
       if (token){
